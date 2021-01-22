@@ -14,7 +14,6 @@ export const login = (data) => {
 }
 
 // 获取用户信息
-// 获取用户信息
 export const getUserProfile = () => {
   return request({
     method: 'GET',

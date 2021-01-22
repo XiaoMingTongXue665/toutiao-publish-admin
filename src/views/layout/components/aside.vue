@@ -31,11 +31,11 @@
       <span slot="title">评论管理</span>
     </el-menu-item>
     <el-menu-item index="/fans">
-      <i class="el-icon-setting"></i>
+      <i class="iconfont iconfans"></i>
       <span slot="title">粉丝管理</span>
     </el-menu-item>
     <el-menu-item index="/settings">
-      <i class="el-icon-setting"></i>
+      <i class="iconfont iconSettingscontroloptions"></i>
       <span slot="title">个人设置</span>
     </el-menu-item>
   </el-menu>
