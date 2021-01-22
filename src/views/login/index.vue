@@ -8,6 +8,18 @@
       <div class="login-head">
         <div class="logo"></div>
       </div>
+      <!--
+      配置 Form 表单验证：
+      1、必须给 el-from 组件绑定 model 为表单数据对象
+      2、给需要验证的表单项 el-form-item 绑定 prop 属性
+         注意：prop 属性需要指定表单对象中的数据名称
+      3、通过 el-from 组件的 rules 属性配置验证规则
+        具体的验证规则可以参考：https://github.com/yiminghe/async-validator
+        如果内置的验证规则不满足，也可以自定义验证规则
+      手动触发表单验证：
+      1、给 el-form 设置 ref 起个名字（随便起名，不要重复即可）
+      2、通过 ref 获取 el-form 组件，调用组件的 validate 进行验证
+      -->
       <el-form class="login-form" ref="login-form" :model="user" :rules="formRules">
         <el-form-item prop="mobile">
           <el-input v-model="user.mobile" placeholder="请输入手机号"></el-input>
@@ -47,6 +59,7 @@
         formRules: { // 表单验证规则配置
         // 要验证的数据名称：规则列表[]
         mobile: [
+          // trigger 用来配置触发校验的时机，有两个选项，change 是当输入的内容发送变化的时候，blur 当失去焦点的时候
           { required: true, message: '请输入手机号', trigger: 'change' },
           { pattern: /^1[3|5|7|8|9]\d{9}$/, message: '请输入正确的号码格式', trigger: 'change' }
         ],
@@ -59,6 +72,8 @@
               // 自定义校验规则：https://element.eleme.cn/#/zh-CN/component/form#zi-ding-yi-xiao-yan-gui-ze
               // 验证通过：callback()
               // 验证失败：callback(new Error('错误消息'))
+              // validator 验证函数不是你来调用的，而是当 element 表单触发验证的时候它会自己内部调用
+              // 所以你只需要提供校验函数处理逻辑就可以了
               validator: (rule, value, callback) => {
                 if (value) {
                   callback()
@@ -112,9 +127,16 @@
           // 关闭 loading
           this.loginLoading = false
 
+
+          // 将接口返回的用户相关数据放到本地存储，方便应用数据共享
+          // 本地存储只能存储字符串
+          // 如果需要存储对象、数组类型的数据，则把他们转为 JSON 格式字符串进行存储
+          window.localStorage.setItem('user', JSON.stringify(res.data.data))
+
           // 跳转到首页
           // this.$touter.push('/')
 
+          // 想要跳转到不同的 URL，则使用 router.push 方法。这个方法会向 history 栈添加一个新的记录，所以，当用户点击浏览器后退按钮时，则回到之前的 URL
           this.$router.push({
             name: 'home'
           })
