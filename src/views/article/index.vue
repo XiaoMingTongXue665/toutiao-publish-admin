@@ -228,6 +228,7 @@ export default {
   watch: {},
   created () {
     this.loadChannels()
+    // 页面初始化，加载第一页数据
     this.loadArticles(1)
   },
   mounted () {},

@@ -12,7 +12,6 @@ const request = axios.create({
   // 定义后端返回的原始数据的处理
   // 参数 data 就是后端返回的原始数据（未经处理的 JSON 格式字符串）
   transformResponse: [function (data) {
-    // Do whatever you want to transform the data
     // console.log(data)
 
     // 后端返回的数据可能不是 JSON 格式字符串
