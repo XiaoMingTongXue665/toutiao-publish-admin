@@ -3,8 +3,10 @@
  */
 import request from '@/utils/request'
 
-//获取文章列表
-export const getArticles = (params) => {
+/**
+ * 获取文章列表
+ */
+export const getArticles = params => {
   return request({
     method: 'GET',
     url: '/mp/v1_0/articles',
@@ -28,7 +30,7 @@ export const getArticleChannels = () => {
 /**
  * 删除文章
  */
-export const deleteArticle = (articleId) => {
+export const deleteArticle = articleId => {
   return request({
     method: 'DELETE',
     // 接口文档中的写的路径参数需要在 url 中传递
@@ -40,11 +42,24 @@ export const deleteArticle = (articleId) => {
 /**
  * 新建文章
  */
-
 export const addArticle = (data, draft = false) => {
   return request({
     method: 'POST',
     url: '/mp/v1_0/articles',
+    params: {
+      draft // 是否存为草稿（true 为草稿）
+    },
+    data
+  })
+}
+
+/**
+ * 编辑文章
+ */
+export const updateArticle = (articleId, data, draft = false) => {
+  return request({
+    method: 'PUT',
+    url: `/mp/v1_0/articles/${articleId}`,
     params: {
       draft // 是否存为草稿（true 为草稿）
     },
@@ -63,15 +78,18 @@ export const getArticle = articleId => {
 }
 
 /**
- * 编辑文章
+ * 修改文章评论状态
  */
-export const updateArticle = (articleId, data, draft = false) => {
+export const updateCommentStatus = (articleId, allowComment) => {
   return request({
     method: 'PUT',
-    url: `/mp/v1_0/articles/${articleId}`,
+    url: '/mp/v1_0/comments/status',
     params: {
-      draft // 是否存为草稿（true 为草稿）
+      // 对象的属性名不受代码规范限制
+      article_id: articleId
     },
-    data
+    data: {
+      allow_comment: allowComment
+    }
   })
 }

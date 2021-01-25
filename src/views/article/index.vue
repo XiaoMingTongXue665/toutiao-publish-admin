@@ -93,7 +93,7 @@
           label="封面">
           <template slot-scope="scope">
             <el-image
-              style="width: 60px; height: 60px"
+              style="width: 50px; height: 50px"
               :src="scope.row.cover.images[0]"
               fit="cover"
               lazy
@@ -102,12 +102,12 @@
                 加载中<span class="dot">...</span>
               </div>
             </el-image>
-<!--            <img-->
-<!--              v-if="scope.row.cover.images[0]"-->
-<!--              class="article-cover"-->
-<!--              :src="scope.row.cover.images[0]" alt=""-->
-<!--            >-->
-<!--            <img v-else class="article-cover" src="./no-cover.gif" alt="">-->
+            <!-- <img
+              v-if="scope.row.cover.images[0]"
+              class="article-cover"
+              :src="scope.row.cover.images[0]" alt=""
+            >
+            <img v-else class="article-cover" src="./no-cover.gif" alt=""> -->
             <!--
               下面这种情况是在运行期间动态改变处理的。
               而本地图片必须在打包的时候就存在。
@@ -228,7 +228,6 @@ export default {
   watch: {},
   created () {
     this.loadChannels()
-    // 页面初始化，加载第一页数据
     this.loadArticles(1)
   },
   mounted () {},
@@ -276,14 +275,9 @@ export default {
         type: 'warning'
       }).then(() => {
         // 确认执行这里
-        // eslint-disable-next-line no-unused-vars
         deleteArticle(articleId.toString()).then(res => {
           // 删除成功，更新当前页的文章数据列表
           this.loadArticles(this.page)
-          this.$message({
-          message: '删除成功',
-          type: 'success'
-          })
         })
       }).catch(() => {
         this.$message({

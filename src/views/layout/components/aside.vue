@@ -3,8 +3,8 @@
     el-menu-item 的 index 不能重复，确保唯一即可
    -->
   <el-menu
-    class="nav-menu"
-    default-active="/"
+    class="nav-menu el-menu-vertical-demo"
+    :default-active="$route.path"
     background-color="#002033"
     text-color="#fff"
     active-text-color="#ffd04b"
@@ -32,11 +32,11 @@
       <span slot="title">评论管理</span>
     </el-menu-item>
     <el-menu-item index="/fans">
-      <i class="iconfont iconfans"></i>
+      <i class="el-icon-setting"></i>
       <span slot="title">粉丝管理</span>
     </el-menu-item>
     <el-menu-item index="/settings">
-      <i class="iconfont iconSettingscontroloptions"></i>
+      <i class="el-icon-setting"></i>
       <span slot="title">个人设置</span>
     </el-menu-item>
   </el-menu>
@@ -48,7 +48,9 @@ export default {
   components: {},
   props: ['is-collapse'],
   data () {
-    return {}
+    return {
+      // isCollapse: true
+    }
   },
   computed: {},
   watch: {},
@@ -64,5 +66,10 @@ export default {
     margin-right: 10px;
     padding-left: 5px;
   }
+}
+
+.el-menu-vertical-demo:not(.el-menu--collapse) {
+  width: 200px;
+  min-height: 400px;
 }
 </style>

@@ -1,8 +1,12 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 
-// 1. 定义 (路由) 组件。
-// 可以从其他文件 import 进来
+// 在 VueCLI 创建的项目中 @ 表示 src 目录
+// 它是 src 目录的路径别名
+// 好处：它不受当前文件路径影响
+// 注意：@ 就是 src 路径，后面别忘了写那个斜杠
+// 使用建议：如果加载的资源路径就在当前目录下，那就正常写
+//       如果需要进行父级路径查找的都使用 @
 import Login from '@/views/login/'
 import Home from '@/views/home/'
 import Layout from '@/views/layout/'
@@ -13,13 +17,9 @@ import Comment from '@/views/comment/'
 import Settings from '@/views/settings/'
 import Fans from '@/views/fans/'
 
-
 Vue.use(VueRouter)
 
-// 2. 定义路由
-// 每个路由应该映射一个组件。 其中"component" 可以是
-// 通过 Vue.extend() 创建的组件构造器，
-// 或者，只是一个组件配置对象。
+// 路由配置表
 const routes = [
   {
     path: '/login',
@@ -37,8 +37,7 @@ const routes = [
         // 我们通常会把根路径 / 设置为网站的首页
         // 为啥呢？因为我们在手动输入网址访问网站的时候，可以省略 /
         // 如果你是别的名称，则必须加上
-        // path 为空，会作为默认子路由渲染
-        path: '',
+        path: '', // path 为空，会作为默认子路由渲染
 
         // 路由的名字是干啥的？
         // 参考：https://gitee.com/lipengzhou/toutiao-publish-admin/issues/I1F1BA
@@ -76,15 +75,15 @@ const routes = [
         component: Fans
       }
     ]
-  },
+  }
 ]
 
-// 3. 创建 router 实例，然后传 `routes` 配置
-// 你还可以传别的配置参数, 不过先这么简单着吧。
 const router = new VueRouter({
   routes
 })
 
+// 路由导航守卫（拦截器）的作用就是控制页面的访问状态
+// beforeEach 是全局前置守卫，任何页面的访问都要经过这里
 // 路由导航守卫：说白了所有页面的导航都会经过这里
 // 守卫页面的导航的
 // to：要去的路由信息
@@ -114,6 +113,5 @@ router.beforeEach((to, from, next) => {
   }
 })
 
+// 我们在组件中使用的 this.$router 其实就是这个模块中的 router
 export default router
-
-// 通过注入路由器，我们可以在任何组件内通过 this.$router 访问路由器，也可以通过 this.$route 访问当前路由：
